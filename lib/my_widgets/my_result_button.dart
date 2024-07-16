@@ -1,4 +1,4 @@
-import 'package:bill_split/components/my_text_style.dart';
+import 'package:bill_split/utils/helpers.dart';
 import 'package:bill_split/pages/results_page.dart';
 import 'package:flutter/material.dart';
 

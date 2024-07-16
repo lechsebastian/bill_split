@@ -1,10 +1,10 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:bill_split/components/my_box.dart';
-import 'package:bill_split/components/my_button.dart';
-import 'package:bill_split/components/my_result_button.dart';
-import 'package:bill_split/components/my_slider.dart';
-import 'package:bill_split/components/my_text_style.dart';
+import 'package:bill_split/my_widgets/my_box.dart';
+import 'package:bill_split/my_widgets/my_button.dart';
+import 'package:bill_split/my_widgets/my_result_button.dart';
+import 'package:bill_split/my_widgets/my_slider.dart';
+import 'package:bill_split/utils/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -21,9 +21,6 @@ class _HomePageState extends State<HomePage> {
   int tipChosen = 0;
   String bill = '0.00';
 
-  List<int> tipsPercentage = [0, 5, 10, 15];
-  final List<String> buttons = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '.', '0', 'DEL'];
-
   void setSliderValue(int value) {
     setState(() {
       people = value;
@@ -33,47 +30,22 @@ class _HomePageState extends State<HomePage> {
   void setTipValue(int value) {
     setState(() {
       tipChosen = value;
-      tip = double.parse(bill) * (tipChosen / 100);
+      tip = calculateTip(bill, tipChosen);
     });
   }
 
   void setBill(String button) {
-    if (button == 'DEL') {
-      if (bill.isNotEmpty) {
-        setState(() {
-          bill = bill.substring(0, bill.length - 1);
-          updateTip();
-        });
-      }
-    } else if (button == '.') {
-      if (!bill.contains('.')) {
-        setState(() {
-          bill += button;
-        });
-      }
-    } else {
-      if (bill.contains('.') && bill.split('.')[1].length >= 2) {
-        setState(() {
-          bill = button;
-          updateTip();
-        });
-        return;
-      }
-
+    updateBill(button, bill, tipChosen, (updatedBill) {
       setState(() {
-        bill += button;
+        bill = updatedBill;
         updateTip();
       });
-    }
+    });
   }
 
   void updateTip() {
     setState(() {
-      if (bill.isEmpty) {
-        tip = 0.00;
-      } else {
-        tip = double.parse(bill) * (tipChosen / 100);
-      }
+      tip = calculateTip(bill, tipChosen);
     });
   }
 

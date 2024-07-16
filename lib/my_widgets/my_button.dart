@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 
-import 'package:bill_split/components/my_text_style.dart';
+import 'package:bill_split/utils/helpers.dart';
 import 'package:flutter/material.dart';
 
 class MyButton extends StatelessWidget {
